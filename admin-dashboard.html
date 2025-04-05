@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <body style="background-image: url('image7.jpg'); background-attachment: fixed;"></body>
+</head>
+<body>
+    <div id="head">
+        <h2>Admin Dashboard - Manage Complaints</h2>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+    <div class="container" style="color: black; background: transparent;">
+        <h2>All Complaints</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Complaint ID</th>
+                    <th>District/City</th>
+                    <th>Pincode</th>
+                    <th>House Number</th>
+                    <th>Status</th>
+                    <th>Update Status</th>
+                </tr>
+            </thead>
+            <tbody id="complaintTableBody" style="color: white;">
+                <!-- Complaints will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        // Redirect if not logged in as admin
+        if (localStorage.getItem("isAdminLoggedIn") !== "true") {
+            alert("Access Denied! Please login as admin.");
+            window.location.href = "admin-login.html";
+        }
+
+        // Function to fetch and display complaints
+        document.addEventListener("DOMContentLoaded", function() {
+            let complaints = JSON.parse(localStorage.getItem("userComplaints")) || [];
+            let complaintTableBody = document.getElementById("complaintTableBody");
+
+            // Clear table before adding new content
+            complaintTableBody.innerHTML = '';
+
+            if (complaints.length === 0) {
+                complaintTableBody.innerHTML = '<tr><td colspan="6">No complaints found</td></tr>';
+            } else {
+                complaints.forEach((complaint, index) => {
+                    let status = complaint.status || "Pending"; // Default status if not provided
+                    
+                    let row = `<tr>
+                        <td>${index + 1}</td>
+                        <td>${complaint.districtCity || "N/A"}</td>
+                        <td>${complaint.pincode || "N/A"}</td>
+                        <td>${complaint.houseNumber || "N/A"}</td>
+                        <td id="status-${index}">${status}</td>
+                        <td>
+                            <select onchange="updateStatus(${index}, this.value)">
+                                <option value="Pending" ${status === "Pending" ? "selected" : ""}>Pending</option>
+                                <option value="In Progress" ${status === "In Progress" ? "selected" : ""}>In Progress</option>
+                                <option value="Resolved" ${status === "Resolved" ? "selected" : ""}>Resolved</option>
+                            </select>
+                        </td>
+                    </tr>`;
+
+                    complaintTableBody.innerHTML += row;
+                });
+            }
+        });
+
+        // Function to update complaint status
+        function updateStatus(index, newStatus) {
+            let complaints = JSON.parse(localStorage.getItem("userComplaints")) || [];
+            if (complaints[index]) {
+                complaints[index].status = newStatus;
+                localStorage.setItem("userComplaints", JSON.stringify(complaints));
+                document.getElementById(`status-${index}`).innerText = newStatus;
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem("isAdminLoggedIn"); // Remove admin session
+            alert("Logged out successfully.");
+            window.location.href = "login.html"; // Redirect to login page
+        }
+    </script>
+</body>
+</html>

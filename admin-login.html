@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background-image: url('https://a.storyblok.com/f/165154/1456x816/a6f7844af9/01_hero_-earth-day-posters.png/m/1000x0/'); background-size: cover; background-repeat: no-repeat;">
+    <div class="container"  style="background: rgba(0, 0, 0, 0.3) ;color: white;">
+        <h2 style="color:white;">Admin Login</h2>
+        <form id="adminLoginForm" style="opacity: 0.8;">
+            <label for="username">Username:</label>
+            <input type="text" id="username" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" required>
+            
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("adminLoginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+            // Hardcoded admin credentials (You can replace this with a secure backend)
+            const adminUsername = "admin";
+            const adminPassword = "12345"; // Change this to a strong password
+
+            if (username === adminUsername && password === adminPassword) {
+                localStorage.setItem("isAdminLoggedIn", "true"); // Store login state
+                alert("Login successful!");
+                window.location.href = "admin-dashboard.html"; // Redirect to admin dashboard
+            } else {
+                alert("Invalid credentials. Try again.");
+            }
+        });
+    </script>
+</body>
+</html>

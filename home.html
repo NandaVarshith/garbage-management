@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background-image: url('image5.jpg'); background-size: cover; background-repeat: no-repeat;">
+    <div id="head">
+        
+        <!-- Include Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Garbage Icon -->
+<i class="fas fa-trash"></i> <!-- Trash Can Icon -->
+<i class="fas fa-recycle"></i> <!-- Recycling Icon -->
+<button onclick="homepage()">Home</button>
+<button onclick="Postpage()">Post</button>
+<button onclick="progress()">Progress</button>
+<button onclick="About()">About</button>
+<button onclick="contact()">Contact</button>
+        <div  style="float: right; background-color: white; border-radius: 5px;"><button> <a  href="login.html">login/</a><a  href="signup.html">signup</a></button></div>
+
+    </div>
+
+    <div id="block">
+    <div id="left">
+        <p style="font-size: 50px;">Empowering Responsible Waste<br>Management, Lets Make<br>A Difference </p>
+    </div>
+    
+    
+    </div>
+
+    <script>
+        function logout() {
+    if (confirm("Are you sure you want to log out?")) {
+        window.location.href = 'login.html';
+    }
+}
+
+        function homepage() {
+    window.location.href = 'home.html';
+}
+
+function About() {
+    window.location.href = 'about.html';
+}
+
+function progress() {
+    window.location.href = 'progress.html';
+}
+
+function contact() {
+    window.location.href = 'contact.html';
+}
+function Postpage() {
+           window.location.href = 'post.html';
+        }
+
+document.querySelector("form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
+    
+    let complaints = JSON.parse(localStorage.getItem("userComplaints")) || [];
+    
+    let newComplaint = {
+        districtCity: document.getElementById("district-city").value,
+        pincode: document.getElementById("pincode").value,
+        houseNumber: document.getElementById("house-number").value,
+        status: "Pending"
+    };
+
+    complaints.push(newComplaint);
+    localStorage.setItem("userComplaints", JSON.stringify(complaints));
+    
+    alert("Complaint submitted successfully!");
+    askForRating();
+    window.location.href = "progress.html";
+});
+
+
+// script for rating -----------------------------------------------------------------------
+let ratings = [];
+
+        function askForRating() {
+            let rating = parseInt(prompt("Please enter a rating between 1 and 5:"));
+            if (rating >= 1 && rating <= 5) {
+                ratings.push(rating);
+                updateAverageRating();
+            } else {
+                alert("Invalid rating! Please enter a number between 1 and 5.");
+            }
+        }
+
+        function updateAverageRating() {
+            const average = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+            alert(`Average Rating: ${average.toFixed(1)}\n${displayAverageStars(average)}`);
+        }
+
+        function displayAverageStars(average) {
+            let stars = "";
+            for (let i = 1; i <= 5; i++) {
+                stars += i <= Math.round(average) ? "★" : "☆";
+            }
+            return stars;
+        }
+    </script>
+</body>
+</html>

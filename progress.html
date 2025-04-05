@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progress</title>
+    <link rel="stylesheet" href="styles.css">
+    <body style="background-image: url('image7.jpg');"></body>
+</head>
+<body>
+    <div id="head">
+        <button onclick="homepage()">Home</button>
+        <button onclick="Postpage()">Post</button>
+        <button onclick="progress()">Progress</button>
+        <button onclick="About()">About</button>
+        <button onclick="contact()">Contact</button>
+    </div>
+
+    <div class="container" style="background: rgba(0, 0, 0, 0.5) ;color: white;">
+        <h2  style="color: white;">Your Complaints</h2>
+        <table border="1">
+            <thead >
+                <tr>
+                    <th>Complaint ID</th>
+                    <th>District/City</th>
+                    <th>Pincode</th>
+                    <th>House Number</th>
+                    <th>Status</th>
+                    
+                </tr>
+            </thead>
+            <tbody id="complaintTableBody">
+                <!-- Complaints will be dynamically added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function homepage() {
+            window.location.href = 'home.html';
+        }
+
+        function About() {
+            window.location.href = 'about.html';
+        }
+
+        function progress() {
+            window.location.href = 'progress.html';
+        }
+
+        function contact() {
+            window.location.href = 'contact.html';
+        }
+        function Postpage() {
+           window.location.href = 'post.html';
+        }
+
+        // Function to fetch and display user complaints with editable status
+        document.addEventListener("DOMContentLoaded", function() {
+            let complaints = JSON.parse(localStorage.getItem("userComplaints")) || [];
+            let complaintTableBody = document.getElementById("complaintTableBody");
+
+            // Clear existing table content
+            complaintTableBody.innerHTML = '';
+
+            if (complaints.length === 0) {
+                complaintTableBody.innerHTML = '<tr><td colspan="6">No complaints found</td></tr>';
+            } else {
+                complaints.forEach((complaint, index) => {
+                    let status = complaint.status || "Pending"; // Default status if not provided
+                    if(status!=="Resolved"){
+                    let row = `<tr>
+                        <td>${index + 1}</td>
+                        <td>${complaint.districtCity || "N/A"}</td>
+                        <td>${complaint.pincode || "N/A"}</td>
+                        <td>${complaint.houseNumber || "N/A"}</td>
+                        <td id="status-${index}">${status}</td>
+                       
+                    </tr>`;
+
+                    complaintTableBody.innerHTML += row;}
+                });
+            }
+        });
+
+        // Function to update complaint status
+        function updateStatus(index, newStatus) {
+            let complaints = JSON.parse(localStorage.getItem("userComplaints")) || [];
+            if (complaints[index]) {
+                complaints[index].status = newStatus;
+                localStorage.setItem("userComplaints", JSON.stringify(complaints));
+                document.getElementById(`status-${index}`).innerText = newStatus;
+            }
+        }
+    </script>
+</body>
+</html>

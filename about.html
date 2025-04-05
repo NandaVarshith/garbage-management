@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background-image: url('image1.jpg');">
+    <div id="head">
+        <button onclick="homepage()">Home</button>
+        <button onclick="Postpage()">Post</button>
+        <button onclick="progress()">Progress</button>
+        <button onclick="About()">About</button>
+        <button onclick="contact()">Contact</button>
+    </div>
+
+    <div class="container" style="background: rgba(0,0,0,0); color: white;">
+        <h2>About Our Website</h2>
+        <p>
+            Welcome to our Garbage Management System! Our main goal is to improve cleanliness in urban areas by 
+            providing an easy and efficient way for residents to raise complaints about garbage collection.
+        </p>
+        <p>
+            Through our platform, users can report uncollected garbage online, and our team ensures timely 
+            collection and disposal. We are committed to making our cities cleaner and healthier by 
+            addressing waste management issues efficiently.
+        </p>
+        <h3>Our Mission</h3>
+        <p>
+            Our mission is to leverage technology to create a sustainable and hygienic environment by ensuring proper 
+            garbage collection and disposal in urban areas.
+        </p>
+        <h3>How It Works</h3>
+        <ul>
+            <li>Users submit complaints regarding uncollected garbage.</li>
+            <li>Our system processes and forwards complaints to the relevant authorities.</li>
+            <li>A dedicated team ensures timely collection and disposal.</li>
+            <li>Users can track the progress of their complaints online.</li>
+        </ul>
+    </div>
+
+    <script>
+        function homepage() {
+            window.location.href = 'home.html';
+        }
+
+        function About() {
+            window.location.href = 'about.html';
+        }
+
+        function progress() {
+            window.location.href = 'progress.html';
+        }
+
+        function contact() {
+            window.location.href = 'contact.html';
+        }
+        function Postpage() {
+           window.location.href = 'post.html';
+        }
+    </script>
+</body>
+</html>
+

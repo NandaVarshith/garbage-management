@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body style="background-image: url('image4.jpg');">
+    <div id="head">
+        <button onclick="homepage()">Home</button>
+        <button onclick="Postpage()">Post</button>
+        <button onclick="progress()">Progress</button>
+        <button onclick="About()">About</button>
+        <button onclick="contact()">Contact</button>
+    </div>
+
+
+
+    <div  class="container" style="background: rgba(0, 0, 0, 0.5) ;color: white;">
+        <h1>Welcome To Garbage Management System</h1>
+        <h3>Post ur complaint</h3>
+        
+        <form  class="home" action="#" method="POST"  style="margin-left:auto;">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" placeholder="9701941946" required pattern="\+?[0-9]{10,13}">
+    
+            </div>
+    
+            <div class="form-group">
+                <label for="district-city">District/City:</label>
+                <input type="text" id="district-city" name="district_city" placeholder="Enter your district/city" required>
+            </div>
+    
+            <div class="form-group">
+                <label for="pincode">Pincode:</label>
+                <input type="text" id="pincode" name="pincode" placeholder="Enter your pincode" required pattern="[0-9]{6}" title="Pincode must be 6 digits">
+    
+            </div>
+            
+            <div class="form-group">
+                <label for="house-number">House Number:</label>
+                <input type="text" id="house-number" name="house_number" placeholder="Enter your house number" required>
+            </div>
+    
+    
+    
+            <div class="form-group">
+                <button type="submit" >Submit</button>
+            </div>
+        </form>
+        <button onclick="logout()">Logout</button>
+    </div>
+
+
+
+
+
+
+    <script>
+        function logout() {
+    if (confirm("Are you sure you want to log out?")) {
+        window.location.href = 'login.html';
+    }
+}
+
+        function homepage() {
+    window.location.href = 'home.html';
+}
+
+function About() {
+    window.location.href = 'about.html';
+}
+
+function progress() {
+    window.location.href = 'progress.html';
+}
+
+function contact() {
+    window.location.href = 'contact.html';
+}
+function Postpage() {
+    window.location.href = 'post.html';
+}
+
+document.querySelector("form").addEventListener("submit", function(event) {
+    event.preventDefault(); // Prevent default form submission
+    
+    let complaints = JSON.parse(localStorage.getItem("userComplaints")) || [];
+    
+    let newComplaint = {
+        districtCity: document.getElementById("district-city").value,
+        pincode: document.getElementById("pincode").value,
+        houseNumber: document.getElementById("house-number").value,
+        status: "Pending"
+    };
+
+    complaints.push(newComplaint);
+    localStorage.setItem("userComplaints", JSON.stringify(complaints));
+    
+    alert("Complaint submitted successfully!");
+    askForRating();
+    window.location.href = "progress.html";
+});
+
+      //------------------------
+       
+      //-----------------------
+    </script>
+</body>
+</html>
